@@ -22,7 +22,7 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
   }
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ inputValue: e.target.value.trim() });
+    this.setState({ inputValue: e.target.value });
   };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>) => {
