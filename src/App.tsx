@@ -1,35 +1,94 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import React from 'react';
+import SearchForm from './layout/SearchForm/SearchForm';
+import SWAPIService from './service/SWAPIService';
+import { type Character } from './types/types';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import SearchResults from './layout/SearchResults/SearchResults';
 
-function App() {
-  const [count, setCount] = useState(0);
+interface State {
+  searchTerm: string;
+  results: Character[];
+  isLoading: boolean;
+  error: string | null;
+  isTriggeredError: boolean;
+}
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+class App extends React.Component<Record<string, never>, State> {
+  #searchService = new SWAPIService();
+
+  constructor(props: Record<string, never>) {
+    super(props);
+    this.state = {
+      searchTerm: localStorage.getItem('searchTerm') || '',
+      results: [],
+      isLoading: false,
+      error: null,
+      isTriggeredError: false,
+    };
+  }
+
+  fetchData = async (inputValue: string) => {
+    this.setState({ isLoading: true, error: null });
+
+    const response = await this.#searchService.search(inputValue);
+
+    if ('error' in response) {
+      this.setState({
+        error: response.errorInfo,
+        isLoading: false,
+      });
+    } else {
+      this.setState({
+        results: response.results,
+        isLoading: false,
+      });
+    }
+  };
+
+  handleSearch = (inputValue: string) => {
+    this.setState({
+      isLoading: true,
+      error: null,
+    });
+
+    localStorage.setItem('searchTerm', inputValue);
+    this.fetchData(inputValue);
+  };
+
+  handleErrorBoundaryTrigger = () => {
+    this.setState({ isTriggeredError: true });
+  };
+
+  componentDidMount() {
+    this.fetchData(this.state.searchTerm);
+  }
+
+  render() {
+    if (this.state.isTriggeredError) {
+      throw new Error('Testing error boundary');
+    }
+
+    return (
+      <>
+        <Header className="header">
+          <SearchForm
+            isLoading={this.state.isLoading}
+            searchTerm={this.state.searchTerm}
+            onSearch={this.handleSearch}
+          />
+        </Header>
+        <Main className="main">
+          <SearchResults
+            isLoading={this.state.isLoading}
+            results={this.state.results}
+            error={this.state.error}
+            onTriggerError={this.handleErrorBoundaryTrigger}
+          />
+        </Main>
+      </>
+    );
+  }
 }
 
 export default App;
