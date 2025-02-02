@@ -37,16 +37,11 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
       <>
         <h1>STAR WARS Characters Info Finder </h1>
         <h2>Search form</h2>
-        {/* //TODO: Add styling for form and it's elements */}
-        <Form
-          onSubmit={this.handleSubmit}
-          style={{ display: 'flex', justifyContent: 'center' }}
-        >
+        <Form className="form" onSubmit={this.handleSubmit}>
           <Input
             placeholder="Enter character name"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
-            style={{ marginRight: '10px', padding: '5px' }}
           />
           <Button type="submit" disabled={this.props.isLoading}>
             Search

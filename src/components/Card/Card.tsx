@@ -2,7 +2,7 @@ import React from 'react';
 
 interface CardProps<T> {
   item: T;
-  renderItem: (item: T) => React.ReactNode; // Function to render the item
+  renderItem: (item: T) => React.ReactNode;
 }
 
 class Card<T> extends React.Component<CardProps<T>> {

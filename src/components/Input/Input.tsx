@@ -2,7 +2,6 @@ import React from 'react';
 
 import './style.scss';
 
-// Extend native input attributes
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   className?: string;

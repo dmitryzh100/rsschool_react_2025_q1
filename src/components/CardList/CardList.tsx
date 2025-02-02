@@ -38,30 +38,4 @@ class CardList<T> extends React.Component<CardListProps<T>> {
   }
 }
 
-// class CardList extends React.Component<{
-//   results: Array<Character>;
-// }> {
-//   render() {
-//     return (
-//       <div className="card-list">
-//         {this.props.results.length > 0 ? (
-//           this.props.results.map((item, index) => (
-//             <Card
-//               key={index}
-//               item={item}
-//               renderItem={(char) => (
-//                 <div>
-//                   <strong>{char.name}</strong>: <span>{char.gender}</span>
-//                 </div>
-//               )}
-//             />
-//           ))
-//         ) : (
-//           <p>No results found</p>
-//         )}
-//       </div>
-//     );
-//   }
-// }
-
 export default CardList;

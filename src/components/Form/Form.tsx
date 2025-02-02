@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './style.scss';
+
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
   className?: string;
@@ -10,7 +12,7 @@ class Form extends React.Component<FormProps> {
     const { children, className, ...rest } = this.props;
 
     return (
-      <form className={`universal-form ${className || ''}`} {...rest}>
+      <form className={className || ''} {...rest}>
         {children}
       </form>
     );
