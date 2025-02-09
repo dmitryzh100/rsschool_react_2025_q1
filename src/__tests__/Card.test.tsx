@@ -1,7 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Character } from '../types/types';
-import CharacterRow from '../components/CharacterRow/CharacterRow';
 import CardList from '../components/CardList/CardList';
 
 import {
@@ -16,12 +15,9 @@ describe('CardList Component', () => {
       <CardList<Character>
         results={mockCharacters}
         renderItem={(char) => (
-          <CharacterRow
-            item={char}
-            // The onClick is not relevant for this test so we can use a no-op.
-            onClick={() => {}}
-            style={{ cursor: 'pointer' }}
-          />
+          <tr style={{ cursor: 'pointer' }} onClick={() => {}}>
+            <td>{char.name}</td>
+          </tr>
         )}
       />
     );
@@ -37,12 +33,12 @@ describe('CardList Component', () => {
       <CardList<Character>
         results={mockCharacters}
         renderItem={(char) => (
-          <CharacterRow
-            item={char}
-            // Use the test-specific handleClick callback.
-            onClick={() => handleClick(char.url)}
+          <tr
             style={{ cursor: 'pointer' }}
-          />
+            onClick={() => handleClick(char.url)}
+          >
+            <td>{char.name}</td>
+          </tr>
         )}
       />
     );
@@ -73,9 +69,8 @@ describe('CardList Component', () => {
       <CardList<Character>
         results={mockCharacters}
         renderItem={(char) => (
-          <CharacterRow
-            item={char}
-            // When the card is clicked, call getCharacterDetails.
+          <tr
+            style={{ cursor: 'pointer' }}
             onClick={() => {
               // Extract the character id from the URL.
               // For example, if char.url === 'https://swapi.dev/api/people/1/',
@@ -86,8 +81,9 @@ describe('CardList Component', () => {
                 service.getCharacterDetails(id);
               }
             }}
-            style={{ cursor: 'pointer' }}
-          />
+          >
+            <td>{char.name}</td>
+          </tr>
         )}
       />
     );

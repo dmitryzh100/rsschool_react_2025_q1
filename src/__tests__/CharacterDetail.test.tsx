@@ -131,7 +131,7 @@ describe('CharacterDetail Component', () => {
     // The effect should eventually render an error message with the error info.
     await waitFor(async () => {
       expect(
-        screen.getByText(/Error: Some error occurred/i)
+        screen.getByText(/Error details: Some error occurred/i)
       ).toBeInTheDocument();
     });
   });
