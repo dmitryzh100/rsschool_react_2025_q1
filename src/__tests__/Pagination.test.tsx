@@ -18,13 +18,10 @@ describe('Pagination Component', () => {
       </MemoryRouter>
     );
 
-    // Find the button for page 2 and click it.
     const page2Button = screen.getByRole('button', { name: '2' });
     fireEvent.click(page2Button);
 
-    // Wait for the navigation to occur.
     await waitFor(async () => {
-      // Assume TestComponent displays the current pathname, e.g., "/search/2"
       expect(screen.getByText(/\/search\/2/)).toBeInTheDocument();
     });
   });

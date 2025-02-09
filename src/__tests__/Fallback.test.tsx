@@ -6,13 +6,11 @@ describe('Fallback Component', () => {
   test('renders the fallback UI', () => {
     render(<Fallback />);
 
-    // Check that the expected texts are rendered.
     expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
     expect(
       screen.getByText('Please try refreshing the page or searching again.')
     ).toBeInTheDocument();
 
-    // Check that the "Back" button is present.
     expect(screen.getByRole('button', { name: /Back/i })).toBeInTheDocument();
   });
 
@@ -20,7 +18,6 @@ describe('Fallback Component', () => {
     const reloadMock = jest.fn();
     const originalLocation = window.location;
 
-    // Override window.location with a new object that has a mocked reload method.
     Object.defineProperty(window, 'location', {
       configurable: true,
       writable: true,
@@ -33,7 +30,6 @@ describe('Fallback Component', () => {
 
     expect(reloadMock).toHaveBeenCalled();
 
-    // Restore the original window.location to avoid affecting other tests.
     Object.defineProperty(window, 'location', {
       configurable: true,
       writable: true,

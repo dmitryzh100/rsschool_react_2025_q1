@@ -1,5 +1,5 @@
 /// <reference types="@testing-library/jest-dom" />
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import SearchResults from '../layout/SearchResults/SearchResults';
 
 import { mockCharacters } from './mockData/mockData';
@@ -17,11 +17,8 @@ describe('SearchResults Component', () => {
       />
     );
 
-    // For testing, we assume the Spinner component renders text "Loading..."
-    // (Adjust this query if your Spinner renders differently.)
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
 
-    // Also check that the "Throw Error" button is rendered.
     expect(
       screen.getByRole('button', { name: /Throw Error/i })
     ).toBeInTheDocument();
@@ -39,7 +36,6 @@ describe('SearchResults Component', () => {
       />
     );
 
-    // Verify that the error message from ErrorMsg appears.
     expect(
       screen.getByText(/Ooops! Something wrong happened/i)
     ).toBeInTheDocument();
@@ -60,11 +56,7 @@ describe('SearchResults Component', () => {
       />
     );
 
-    // The header "Search Results" is always rendered.
     expect(screen.getByText(/Search Results/i)).toBeInTheDocument();
-
-    // Verify that the CardList renders a character row.
-    // We assume CharacterRow renders the character's name.
     expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
   });
 
@@ -88,7 +80,7 @@ describe('SearchResults Component', () => {
     expect(onTriggerErrorMock).toHaveBeenCalledTimes(1);
   });
 
-  test('clicking on a character row calls onItemClick callback with the correct URL', () => {
+  test('clicking on a character row calls onItemClick callback with the correct URL', async () => {
     const onItemClickMock = jest.fn();
     render(
       <SearchResults
@@ -101,12 +93,12 @@ describe('SearchResults Component', () => {
       />
     );
 
-    // Find the element that shows the character's name.
-    // We assume CharacterRow renders the character's name and is clickable.
     const characterElement = screen.getByText(/Luke Skywalker/i);
-    fireEvent.click(characterElement);
 
-    // The onItemClick callback should be called with Luke's URL.
+    await act(async () => {
+      fireEvent.click(characterElement);
+    });
+
     expect(onItemClickMock).toHaveBeenCalledTimes(1);
     expect(onItemClickMock).toHaveBeenCalledWith(
       'https://swapi.dev/api/people/1/'

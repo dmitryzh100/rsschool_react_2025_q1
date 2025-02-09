@@ -11,9 +11,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages }) => {
   const { page } = useParams<{ page: string }>();
   const currentPage = page ? parseInt(page, 10) : 1;
 
-  // Handle pagination.
   const handlePageChange = (newPage: number) => {
-    // Navigate to the new page (closing any details pane).
     navigate(`/search/${newPage}`);
   };
 

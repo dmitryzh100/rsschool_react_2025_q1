@@ -22,7 +22,6 @@ describe('CardList Component', () => {
       />
     );
 
-    // Check that the cell containing "Luke Skywalker" is rendered.
     expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
   });
 
@@ -43,24 +42,19 @@ describe('CardList Component', () => {
       />
     );
 
-    // Locate the cell with "Luke Skywalker"
     const lukeCell = screen.getByText('Luke Skywalker');
-    // Find the closest <tr> ancestor – this is our clickable card row.
     const row = lukeCell.closest('tr');
     expect(row).toBeInTheDocument();
 
-    // Simulate a click on the card row.
     if (row) {
       fireEvent.click(row);
     }
 
-    // Verify that handleClick was called exactly once with Luke's URL.
     expect(handleClick).toHaveBeenCalledTimes(1);
     expect(handleClick).toHaveBeenCalledWith('https://swapi.dev/api/people/1/');
   });
 
   test('clicking triggers an additional API call to fetch detailed information', async () => {
-    // Spy on the getCharacterDetails method.
     const getCharacterDetailsSpy = jest
       .spyOn(SWAPIService.prototype, 'getCharacterDetails')
       .mockResolvedValue(mockCharacterDetail);
@@ -72,9 +66,6 @@ describe('CardList Component', () => {
           <tr
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              // Extract the character id from the URL.
-              // For example, if char.url === 'https://swapi.dev/api/people/1/',
-              // this returns "1".
               const id = char.url.split('/').filter(Boolean).pop();
               if (id) {
                 const service = new SWAPIService();
@@ -88,7 +79,6 @@ describe('CardList Component', () => {
       />
     );
 
-    // Simulate clicking on the card for "Luke Skywalker".
     const lukeCell = screen.getByText('Luke Skywalker');
     const row = lukeCell.closest('tr');
     expect(row).toBeInTheDocument();
@@ -96,11 +86,8 @@ describe('CardList Component', () => {
       fireEvent.click(row);
     }
 
-    // Wait for any pending promises to resolve.
-    // (You could also use waitFor if needed; here we rely on the mock resolution.)
     await Promise.resolve();
 
-    // Verify that getCharacterDetails was called once with the extracted id.
     expect(getCharacterDetailsSpy).toHaveBeenCalledTimes(1);
     expect(getCharacterDetailsSpy).toHaveBeenCalledWith('1');
   });

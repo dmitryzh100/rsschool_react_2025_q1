@@ -23,14 +23,10 @@ describe('CardList Component', () => {
       />
     );
 
-    // Query the table element
     const table = screen.getByRole('table');
 
-    // Get all rows in the table (this includes the header row from <thead>)
     const rows = within(table).getAllByRole('row');
 
-    // Expect the number of data rows to equal the number of characters.
-    // Since the first row is the header row, subtract one.
     expect(rows.slice(1)).toHaveLength(mockCharacters.length);
   });
 
@@ -48,7 +44,6 @@ describe('CardList Component', () => {
       />
     );
 
-    // Check that the "No results found" message is rendered
     expect(screen.getByText(/no results found/i)).toBeInTheDocument();
   });
 });

@@ -4,14 +4,6 @@ import {
   Character,
 } from '../types/types';
 
-// export interface PaginatedResponse<T> {
-//   count: number;
-//   totalPages: number;
-//   results: T[];
-//   next: string | null;
-//   previous: string | null;
-// }
-
 class SWAPIService {
   #URL = 'https://swapi.dev/api/people/';
   static readonly ITEMS_PER_PAGE = 10;
@@ -35,7 +27,6 @@ class SWAPIService {
     return errorResponse;
   }
 
-  // The search method remains an instance property if desired.
   async search(
     searchTerm: string,
     page: number = 1
@@ -60,7 +51,6 @@ class SWAPIService {
     };
   }
 
-  // Change getCharacterDetails to a regular method (on the prototype).
   async getCharacterDetails(
     characterId: string
   ): Promise<Character | ServiceErrorResponse> {
