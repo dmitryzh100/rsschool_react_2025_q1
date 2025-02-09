@@ -19,7 +19,7 @@ const MainPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isErrorBoudary, setErrorBoundary] = useState<boolean>(false);
+  const [isErrorBoudary, setIsErrorBoundary] = useState<boolean>(false);
 
   const { page } = useParams<{ page: string }>();
   const currentPage = page ? parseInt(page, 10) : 1;
@@ -30,7 +30,9 @@ const MainPage: React.FC = () => {
   const fetchData = async (inputValue: string, page: number) => {
     setIsLoading(true);
     setError(null);
+
     const response = await searchServiceRef.current.search(inputValue, page);
+
     if ('error' in response) {
       setError(response.errorInfo);
       setIsLoading(false);
@@ -51,7 +53,7 @@ const MainPage: React.FC = () => {
   };
 
   const handleTriggerError = () => {
-    setErrorBoundary(true);
+    setIsErrorBoundary(true);
   };
 
   const handleItemClick = (url: string) => {
