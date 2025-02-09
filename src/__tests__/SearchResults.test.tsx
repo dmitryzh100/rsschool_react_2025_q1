@@ -11,6 +11,7 @@ describe('SearchResults Component', () => {
         isLoading={true}
         error={null}
         results={[]}
+        totalPages={0}
         onTriggerError={jest.fn()}
         onItemClick={jest.fn()}
       />
@@ -32,6 +33,7 @@ describe('SearchResults Component', () => {
         isLoading={false}
         error="Error occurred"
         results={[]}
+        totalPages={0}
         onTriggerError={jest.fn()}
         onItemClick={jest.fn()}
       />
@@ -52,6 +54,7 @@ describe('SearchResults Component', () => {
         isLoading={false}
         error={null}
         results={mockCharacters}
+        totalPages={1}
         onTriggerError={jest.fn()}
         onItemClick={jest.fn()}
       />
@@ -72,6 +75,7 @@ describe('SearchResults Component', () => {
         isLoading={false}
         error={null}
         results={mockCharacters}
+        totalPages={1}
         onTriggerError={onTriggerErrorMock}
         onItemClick={jest.fn()}
       />
@@ -91,6 +95,7 @@ describe('SearchResults Component', () => {
         isLoading={false}
         error={null}
         results={mockCharacters}
+        totalPages={1}
         onTriggerError={jest.fn()}
         onItemClick={onItemClickMock}
       />

@@ -8,8 +8,9 @@ interface CharacherRowProps extends React.HTMLAttributes<HTMLElement> {
 const CharacherRow: React.FC<CharacherRowProps> = ({ item, ...rest }) => {
   return (
     <tr {...rest}>
-      <td>{item.name}</td>
       <td>
+        <strong>Name</strong> : {item.name}
+        <br />
         <strong>Gender</strong> : {item.gender}
         <br />
         <strong>Hair</strong> : {item.hair_color}

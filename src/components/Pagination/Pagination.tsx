@@ -1,17 +1,22 @@
 // src/components/Pagination/Pagination.tsx
 import React from 'react';
+import { useNavigate, useParams } from 'react-router';
 
 interface PaginationProps {
-  currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => {
+const Pagination: React.FC<PaginationProps> = ({ totalPages }) => {
+  const navigate = useNavigate();
+  const { page } = useParams<{ page: string }>();
+  const currentPage = page ? parseInt(page, 10) : 1;
+
+  // Handle pagination.
+  const handlePageChange = (newPage: number) => {
+    // Navigate to the new page (closing any details pane).
+    navigate(`/search/${newPage}`);
+  };
+
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -22,7 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={page}
           disabled={page === currentPage}
-          onClick={() => onPageChange(page)}
+          onClick={() => handlePageChange(page)}
         >
           {page}
         </button>

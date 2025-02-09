@@ -18,7 +18,6 @@ const CardList = <T,>({
           <thead>
             <tr>
               <th>Character Name</th>
-              <th>Character Description</th>
             </tr>
           </thead>
           <tbody>
