@@ -6,20 +6,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
 }
 
-class Button extends React.Component<ButtonProps> {
-  static defaultProps = {
-    label: 'Button',
-  };
-
-  render() {
-    const { label, children, className, ...rest } = this.props;
-
-    return (
-      <button className={className || ''} {...rest}>
-        {children || label}
-      </button>
-    );
-  }
-}
+const Button: React.FC<ButtonProps> = ({
+  label = 'Button',
+  children,
+  className = '',
+  ...rest
+}) => {
+  return (
+    <button className={className} {...rest}>
+      {children || label}
+    </button>
+  );
+};
 
 export default Button;

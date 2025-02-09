@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './style.scss';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -7,21 +6,18 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-class Input extends React.Component<InputProps> {
-  static defaultProps = {
-    type: 'text',
-  };
-
-  render() {
-    const { label, className, ...rest } = this.props;
-
-    return (
-      <div className={`input-container ${className || ''}`}>
-        {label && <label className="input-label">{label}</label>}
-        <input className="input" {...rest} />
-      </div>
-    );
-  }
-}
+const Input: React.FC<InputProps> = ({
+  label,
+  className = '',
+  type = 'text',
+  ...rest
+}) => {
+  return (
+    <div className={`input-container ${className}`}>
+      {label && <label className="input-label">{label}</label>}
+      <input className="input" type={type} {...rest} />
+    </div>
+  );
+};
 
 export default Input;

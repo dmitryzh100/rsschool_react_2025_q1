@@ -1,12 +1,22 @@
 import {
   type ServiceResponse,
   type ServiceErrorResponse,
+  Character,
 } from '../types/types';
+
+// export interface PaginatedResponse<T> {
+//   count: number;
+//   totalPages: number;
+//   results: T[];
+//   next: string | null;
+//   previous: string | null;
+// }
 
 class SWAPIService {
   #URL = 'https://swapi.dev/api/people/';
+  static readonly ITEMS_PER_PAGE = 10;
 
-  #handleError = (response: Response): ServiceErrorResponse => {
+  #handleError(response: Response): ServiceErrorResponse {
     const errorResponse = {
       error: true,
       errorInfo: 'Failed to fetch data',
@@ -23,22 +33,46 @@ class SWAPIService {
     }
 
     return errorResponse;
-  };
+  }
 
-  search = async (
-    searchTerm: string
-  ): Promise<ServiceResponse | ServiceErrorResponse> => {
+  // The search method remains an instance property if desired.
+  async search(
+    searchTerm: string,
+    page: number = 1
+  ): Promise<ServiceResponse | ServiceErrorResponse> {
     const searchURL = searchTerm
-      ? `${this.#URL}?search=${searchTerm.trim()}`
-      : this.#URL;
+      ? `${this.#URL}?search=${searchTerm.trim()}&page=${page}`
+      : `${this.#URL}?page=${page}`;
     const response = await fetch(searchURL);
 
     if (!response.ok) {
       return this.#handleError(response);
     }
 
-    return response.json();
-  };
+    const data = await response.json();
+    const totalPages = Math.ceil(data.count / SWAPIService.ITEMS_PER_PAGE);
+    return {
+      count: data.count,
+      totalPages,
+      results: data.results,
+      next: data.next,
+      previous: data.previous,
+    };
+  }
+
+  // Change getCharacterDetails to a regular method (on the prototype).
+  async getCharacterDetails(
+    characterId: string
+  ): Promise<Character | ServiceErrorResponse> {
+    const detailURL = `${this.#URL}${characterId}/`;
+    const response = await fetch(detailURL);
+
+    if (!response.ok) {
+      return this.#handleError(response);
+    }
+
+    return await response.json();
+  }
 }
 
 export default SWAPIService;

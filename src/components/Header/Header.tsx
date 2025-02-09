@@ -5,16 +5,16 @@ interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-class Header extends React.Component<HeaderProps> {
-  render() {
-    const { children, className, ...rest } = this.props;
-
-    return (
-      <header className={className || ''} {...rest}>
-        {children}
-      </header>
-    );
-  }
-}
+const Header: React.FC<HeaderProps> = ({
+  children,
+  className = '',
+  ...rest
+}) => {
+  return (
+    <header className={className} {...rest}>
+      {children}
+    </header>
+  );
+};
 
 export default Header;

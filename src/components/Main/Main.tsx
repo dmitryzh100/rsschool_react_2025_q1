@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './style.scss';
 
 interface MainProps extends React.HTMLAttributes<HTMLElement> {
@@ -7,16 +6,12 @@ interface MainProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-class Main extends React.Component<MainProps> {
-  render() {
-    const { children, className, ...rest } = this.props;
-
-    return (
-      <main className={className || ''} {...rest}>
-        {children}
-      </main>
-    );
-  }
-}
+const Main: React.FC<MainProps> = ({ children, className = '', ...rest }) => {
+  return (
+    <main className={className} {...rest}>
+      {children}
+    </main>
+  );
+};
 
 export default Main;

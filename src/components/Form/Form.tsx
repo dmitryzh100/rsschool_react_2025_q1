@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './style.scss';
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -7,16 +6,12 @@ interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   className?: string;
 }
 
-class Form extends React.Component<FormProps> {
-  render() {
-    const { children, className, ...rest } = this.props;
-
-    return (
-      <form className={className || ''} {...rest}>
-        {children}
-      </form>
-    );
-  }
-}
+const Form: React.FC<FormProps> = ({ children, className = '', ...rest }) => {
+  return (
+    <form className={className} {...rest}>
+      {children}
+    </form>
+  );
+};
 
 export default Form;

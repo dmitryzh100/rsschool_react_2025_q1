@@ -5,10 +5,8 @@ interface CardProps<T> {
   renderItem: (item: T) => React.ReactNode;
 }
 
-class Card<T> extends React.Component<CardProps<T>> {
-  render() {
-    return <>{this.props.renderItem(this.props.item)}</>;
-  }
-}
+const Card = <T,>({ item, renderItem }: CardProps<T>): React.ReactElement => {
+  return <>{renderItem(item)}</>;
+};
 
 export default Card;
