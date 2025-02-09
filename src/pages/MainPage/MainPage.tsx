@@ -19,7 +19,7 @@ const MainPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isErrorBoudary, setIsErrorBoundary] = useState<boolean>(false);
+  const [isErrorBoundary, setIsErrorBoundary] = useState<boolean>(false);
 
   const { page } = useParams<{ page: string }>();
   const currentPage = page ? parseInt(page, 10) : 1;
@@ -65,7 +65,7 @@ const MainPage: React.FC = () => {
     }
   };
 
-  if (isErrorBoudary) {
+  if (isErrorBoundary) {
     throw new Error('Triggered error boundary');
   }
 
