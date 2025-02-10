@@ -1,0 +1,24 @@
+.left-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .spinner {
+    align-self: center;
+  }
+}
+
+.right-containter {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .spinner {
+    align-self: center;
+  }
+
+  .error {
+    align-self: center;
+    margin-top: 125px;
+  }
+}
